@@ -1,0 +1,187 @@
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Button, Select, Card, Space } from 'antd';
+import type { FormPayload } from '../types/global';
+import axios from 'axios';
+import { useGlobalMessage } from '../services/MessageProvider';
+import { useParams } from 'react-router-dom';
+
+const { Option } = Select;
+
+type FieldType = 'text' | 'number' | 'select';
+
+interface Field {
+    label: string;
+    type: FieldType;
+    required?: boolean;
+    options?: string[];
+}
+
+interface FormValues {
+    title: string;
+}
+
+const CreateForm: React.FC = () => {
+    const [form] = Form.useForm<{ title: string }>();
+    const [fields, setFields] = useState<Field[]>([]);
+    const { id } = useParams()
+    const [items, setItems] = useState()
+    const { success, error } = useGlobalMessage();
+
+    const fetchDetails = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/forms/${id}`);
+            const data = response.data;
+            setItems(data)
+
+            form.setFieldsValue({ title: data.title });
+
+            if (data.fields && Array.isArray(data.fields)) {
+                setFields(data.fields);
+            }
+        } catch (err) {
+            error('Failed to fetch form details');
+        }
+    };
+
+    useEffect(() => {
+        if (id) {
+            fetchDetails()
+            form.setFieldsValue(items)
+        }
+    }, [])
+
+
+    const addField = () => {
+        setFields([
+            ...fields,
+            { label: '', type: 'text', required: false, options: [] },
+        ]);
+    };
+
+    const updateField = <K extends keyof Field>(
+        index: number,
+        key: K,
+        value: Field[K]
+    ) => {
+        const updated = [...fields];
+        updated[index][key] = value;
+        setFields(updated);
+    };
+
+    const addOption = (index: number) => {
+        const updated = [...fields];
+        updated[index].options = [...(updated[index].options || []), ''];
+        setFields(updated);
+    };
+
+    const updateOption = (
+        fieldIndex: number,
+        optionIndex: number,
+        value: string
+    ) => {
+        const updated = [...fields];
+        if (updated[fieldIndex].options) {
+            updated[fieldIndex].options![optionIndex] = value;
+        }
+        setFields(updated);
+    };
+
+    const handleSubmit = async (values: FormValues) => {
+        const payload: FormPayload = {
+            title: values.title,
+            fields,
+        };
+
+        console.log('Payload:', payload);
+
+        if (id) {
+            await axios.put(`http://localhost:3000/api/forms/${id}`, payload);
+            success('Form Updated Successfully');
+        } else {
+            await axios.post('http://localhost:3000/api/forms', payload);
+            success('Form Created Successfully');
+        }
+    };
+
+    return (
+        <Card title="Create Form">
+            <Form form={form} layout="vertical" onFinish={handleSubmit}>
+
+                <Form.Item
+                    name="title"
+                    label="Form Title"
+                    rules={[{ required: true, message: 'Title is required' }]}
+                >
+                    <Input placeholder="Enter form title" />
+                </Form.Item>
+
+                {fields.map((field, index) => (
+                    <Card key={index} style={{ marginBottom: 10 }}>
+                        <Space direction="vertical" style={{ width: '100%' }}>
+
+                            <Input
+                                placeholder="Field Label"
+                                value={field.label}
+                                onChange={(e) =>
+                                    updateField(index, 'label', e.target.value)
+                                }
+                            />
+
+                            <Select
+                                value={field.type}
+                                onChange={(value: FieldType) =>
+                                    updateField(index, 'type', value)
+                                }
+                            >
+                                <Option value="text">Text</Option>
+                                <Option value="number">Number</Option>
+                                <Option value="select">Select</Option>
+                            </Select>
+
+                            {field.type === 'select' && (
+                                <div>
+                                    {field.options?.map((opt, i) => (
+                                        <Input
+                                            key={i}
+                                            placeholder={`Option ${i + 1}`}
+                                            value={opt}
+                                            onChange={(e) =>
+                                                updateOption(index, i, e.target.value)
+                                            }
+                                            style={{ marginBottom: 5 }}
+                                        />
+                                    ))}
+                                    <Button onClick={() => addOption(index)}>
+                                        Add Option
+                                    </Button>
+                                </div>
+                            )}
+
+                            <Button
+                                type={field.required ? 'primary' : 'default'}
+                                onClick={() =>
+                                    updateField(index, 'required', !field.required)
+                                }
+                            >
+                                {field.required ? 'Required' : 'Optional'}
+                            </Button>
+
+                        </Space>
+                    </Card>
+                ))}
+
+                <Button type="dashed" onClick={addField} style={{ marginBottom: 20 }}>
+                    + Add Field
+                </Button>
+
+                <br />
+
+                <Button type="primary" htmlType="submit">
+                    Create Form
+                </Button>
+            </Form>
+        </Card>
+    );
+};
+
+export default CreateForm;
