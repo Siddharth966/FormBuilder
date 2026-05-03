@@ -20,24 +20,35 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const [chartData, setChartData] = useState(null);
+const [chartData, setChartData] = useState<{
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string[];
+    borderRadius: number;
+  }[];
+}>({
+  labels: [],
+  datasets: []
+});
   const [chartType, setChartType] = useState("pie");
 
   const [stats, setStats] = useState({
     totalForms: 0,
     totalResponses: 0,
     mostPopularForm: "",
-    avgResponses: 0,
+    avgResponses: "0",
   });
 
   useEffect(() => {
     fetch("http://localhost:3000/api/dashboard")
       .then((res) => res.json())
       .then((data) => {
-        const labels = data.data.map((item) => item.title);
-        const values = data.data.map((item) => item.responseCount);
+        const labels = data.data.map((item:{title:string}) => item.title);
+        const values = data.data.map((item:{responseCount:number}) => item.responseCount);
 
-        const totalResponses = values.reduce((a, b) => a + b, 0);
+        const totalResponses = values.reduce((a:number, b:number) => a + b, 0);
 
         const maxIndex = values.indexOf(Math.max(...values));
         const mostPopularForm = labels[maxIndex];
@@ -153,7 +164,7 @@ const Dashboard = () => {
   );
 };
 
-const Card = ({ title, value }) => (
+const Card = ({ title, value }:{title:string,value:string | number}) => (
   <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition duration-300">
     <h3 className="text-gray-500 text-sm">{title}</h3>
     <p className="text-xl font-bold mt-2 text-gray-800">{value}</p>

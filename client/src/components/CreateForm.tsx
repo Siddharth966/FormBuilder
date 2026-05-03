@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Select, Card, Space } from 'antd';
-import type { FormPayload } from '../types/global';
+import type { Field, FormPayload, FormValues } from '../types/global';
 import axios from 'axios';
 import { useGlobalMessage } from '../services/MessageProvider';
 import { useParams } from 'react-router-dom';
@@ -9,29 +9,20 @@ const { Option } = Select;
 
 type FieldType = 'text' | 'number' | 'select';
 
-interface Field {
-    label: string;
-    type: FieldType;
-    required?: boolean;
-    options?: string[];
-}
-
-interface FormValues {
-    title: string;
-}
 
 const CreateForm: React.FC = () => {
-    const [form] = Form.useForm<{ title: string }>();
+    const [form] = Form.useForm();
     const [fields, setFields] = useState<Field[]>([]);
     const { id } = useParams()
-    const [items, setItems] = useState()
     const { success, error } = useGlobalMessage();
 
-    const fetchDetails = async () => {
+    
+
+    useEffect(() => {
+        const fetchDetails = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/api/forms/${id}`);
             const data = response.data;
-            setItems(data)
 
             form.setFieldsValue({ title: data.title });
 
@@ -39,16 +30,14 @@ const CreateForm: React.FC = () => {
                 setFields(data.fields);
             }
         } catch (err) {
+     console.error(err);
             error('Failed to fetch form details');
         }
     };
-
-    useEffect(() => {
         if (id) {
-            fetchDetails()
-            form.setFieldsValue(items)
+            fetchDetails();
         }
-    }, [])
+    }, [id]);
 
 
     const addField = () => {

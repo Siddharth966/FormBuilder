@@ -7,7 +7,7 @@ interface Props {
     open: boolean;
     formData: Form | null;
     onClose: () => void;
-    onSubmit?: (values: any) => void;
+    onSubmit?: (values:Record<string,string> ) => void;
 }
 
 const FormPreviewModal: React.FC<Props> = ({

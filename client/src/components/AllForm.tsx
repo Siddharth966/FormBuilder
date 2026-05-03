@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Table, Tag } from 'antd';
-import { CopyOutlined, EditFilled, EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { CopyOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { ShareAltOutlined } from '@ant-design/icons';
 import type { Form } from '../types/global';
 import FormPreviewModal from './ViewForm';
@@ -16,6 +16,9 @@ const AllForm: React.FC = () => {
     const navigate = useNavigate()
     const baseUrl = window.location.origin;
 
+
+
+    useEffect(() => {
     const fetchDetails = async () => {
         try {
             setLoading(true);
@@ -30,9 +33,8 @@ const AllForm: React.FC = () => {
         }
     };
 
-    useEffect(() => {
-        fetchDetails();
-    }, []);
+  fetchDetails();
+}, []);
 
     const handleView = (record: Form) => {
         setSelectedForm(record);
@@ -50,11 +52,11 @@ const AllForm: React.FC = () => {
         },
         {
             title: 'Fields Count',
-            render: (_: any, record: Form) => record.fields.length,
+            render: (_:string, record: Form) => record.fields.length,
         },
         {
             title: 'Fields',
-            render: (_: any, record: Form) => (
+            render: (_:string, record: Form) => (
                 <>
                     {record.fields.map((field) => (
                         <Tag key={field._id}>
@@ -71,7 +73,7 @@ const AllForm: React.FC = () => {
         },
         {
             title: 'Actions',
-            render: (_: any, record: Form) => (
+            render: (_: string, record: Form) => (
                 <div className='flex  gap-2'>
                     <EditOutlined
                         style={{ cursor: 'pointer', fontSize: 18 }}

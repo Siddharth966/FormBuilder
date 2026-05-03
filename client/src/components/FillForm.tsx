@@ -14,7 +14,10 @@ const FillForm = () => {
     const { id } = useParams();
     const { error } = useGlobalMessage();
 
-    const fetchDetails = async () => {
+    
+
+    useEffect(() => {
+        const fetchDetails = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/api/forms/${id}`);
             const data = response.data;
@@ -22,12 +25,11 @@ const FillForm = () => {
             if (data.fields && Array.isArray(data.fields)) {
                 setFields(data.fields);
             }
-        } catch (err) {
+        } catch (err:unknown) {
+            console.error(err)
             error('Failed to fetch form details');
         }
     };
-
-    useEffect(() => {
         if (id) fetchDetails();
     }, [id]);
 
@@ -40,6 +42,7 @@ const FillForm = () => {
             });
             setSubmitted(true);
         } catch (err) {
+            console.error(err)
             error('Failed to submit form');
         } finally {
             setSubmitting(false);
@@ -60,7 +63,7 @@ const FillForm = () => {
                 );
             case 'select':
                 return (
-                    <select className={`${baseClass} cursor-pointer`}>
+                    <select name={field.label} aria-label={field.label} className={`${baseClass} cursor-pointer`}>
                         <option value="" disabled>Choose an option</option>
                         {field.options?.map((opt, i) => (
                             <option key={i} value={opt}>{opt}</option>

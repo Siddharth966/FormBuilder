@@ -1,25 +1,19 @@
 import { Select, Table, Spin } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import type { FormSubmission, FormValues } from "../types/global";
 
 const { Option } = Select;
 
 const Responses = () => {
-  const [forms, setForms] = useState([]);
-  const [responses, setResponses] = useState([]);
+  const [forms, setForms] = useState<FormValues[]>([]);
+  const [responses, setResponses] = useState<FormSubmission[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchForms = async () => {
-    try {
-      const res = await axios.get("http://localhost:3000/api/forms");
-      setForms(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  console.log(responses)
 
 
-  const fetchResponses = async (formId) => {
+  const fetchResponses = async (formId:string) => {
     try {
       setLoading(true);
       const res = await axios.get(
@@ -34,6 +28,14 @@ const Responses = () => {
   };
 
   useEffect(() => {
+    const fetchForms = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/forms");
+      setForms(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
     fetchForms();
   }, []);
 
@@ -49,7 +51,7 @@ const Responses = () => {
             title: "Submitted At",
             dataIndex: "createdAt",
             key: "createdAt",
-            render: (text) => new Date(text).toLocaleString(),
+            render: (text:string) => new Date(text).toLocaleString(),
           },
         ]
       : [];
