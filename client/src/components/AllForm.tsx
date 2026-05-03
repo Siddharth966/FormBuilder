@@ -6,6 +6,7 @@ import { ShareAltOutlined } from '@ant-design/icons';
 import type { Form } from '../types/global';
 import FormPreviewModal from './ViewForm';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../global.constant';
 
 const AllForm: React.FC = () => {
     const [items, setItems] = useState<Form[]>([]);
@@ -14,7 +15,7 @@ const AllForm: React.FC = () => {
     const [link, setLink] = useState<{ link: string, id: string }>()
     const [open, setOpen] = useState(false);
     const navigate = useNavigate()
-    const baseUrl = window.location.origin;
+    const url = window.location.origin;
 
 
 
@@ -102,7 +103,7 @@ const AllForm: React.FC = () => {
 
 
     const handleShare = (id: string) => {
-        const generatedLink = `${baseUrl}/share/${id}`;
+        const generatedLink = `${url}/share/${id}`;
         setLink({ link: generatedLink, id });
     };
 
