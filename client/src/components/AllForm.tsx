@@ -23,7 +23,7 @@ const AllForm: React.FC = () => {
         try {
             setLoading(true);
             const response = await axios.get<Form[]>(
-                'http://localhost:3000/api/forms'
+                `${baseUrl}/api/forms`
             );
             setItems(response.data);
         } catch (error) {

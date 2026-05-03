@@ -22,5 +22,5 @@ app.use("/api/dashboard", dashboardRoutes);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on ${baseUrl}`);
 });

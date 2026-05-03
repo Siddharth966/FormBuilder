@@ -2,6 +2,7 @@ import { Select, Table, Spin } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import type { FormSubmission, FormValues } from "../types/global";
+import { baseUrl } from "../global.constant";
 
 const { Option } = Select;
 
@@ -17,7 +18,7 @@ const Responses = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://localhost:3000/api/responses/forms/response?formId=${formId}`
+        `${baseUrl}/api/responses/forms/response?formId=${formId}`
       );
       setResponses(res.data);
     } catch (err) {
@@ -30,7 +31,7 @@ const Responses = () => {
   useEffect(() => {
     const fetchForms = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/forms");
+      const res = await axios.get(`${baseUrl}/api/forms`);
       setForms(res.data);
     } catch (err) {
       console.error(err);

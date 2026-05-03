@@ -4,6 +4,7 @@ import axios from 'axios';
 import type { Field } from '../types/global';
 import { useGlobalMessage } from '../services/MessageProvider';
 import { useParams } from 'react-router-dom';
+import { baseUrl } from '../global.constant';
 
 const FillForm = () => {
     const [form] = AntForm.useForm();
@@ -19,7 +20,7 @@ const FillForm = () => {
     useEffect(() => {
         const fetchDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/forms/${id}`);
+            const response = await axios.get(`${baseUrl}/api/forms/${id}`);
             const data = response.data;
             setFormTitle(data.title);
             if (data.fields && Array.isArray(data.fields)) {
@@ -36,7 +37,7 @@ const FillForm = () => {
     const handleSubmit = async (values: Record<string, unknown>) => {
         try {
             setSubmitting(true);
-            await axios.post('http://localhost:3000/api/responses', {
+            await axios.post(`${baseUrl}/api/responses`, {
                 formId: id,
                 data: values,
             });

@@ -9,6 +9,7 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
+import { baseUrl } from "../global.constant";
 
 ChartJS.register(
   ArcElement,
@@ -42,7 +43,7 @@ const [chartData, setChartData] = useState<{
   });
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/dashboard")
+    fetch(`${baseUrl}/api/dashboard`)
       .then((res) => res.json())
       .then((data) => {
         const labels = data.data.map((item:{title:string}) => item.title);
