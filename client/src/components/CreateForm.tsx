@@ -104,7 +104,7 @@ const CreateForm: React.FC = () => {
     };
 
     return (
-        <Card title="Create Form">
+        <Card title={id?"Update Form":"Create Form"}>
             <Form form={form} layout="vertical" onFinish={handleSubmit}>
 
                 <Form.Item
@@ -177,7 +177,7 @@ const CreateForm: React.FC = () => {
                 <br />
 
                 <Button type="primary" htmlType="submit">
-                    Create Form
+                    {id?"Update Form":"Create Form"}
                 </Button>
             </Form>
         </Card>

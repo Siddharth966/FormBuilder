@@ -3,6 +3,7 @@ import express from "express";
 import connectDB from "./db.js";
 import formRoutes from "./routes/form.route.js";
 import submissionRoutes from "./routes/subimission.js";
+import dashboardRoutes from "./routes/dashboard.js";
 import cors from "cors";
 const app = express();
 const PORT = 3000;
@@ -16,6 +17,8 @@ connectDB();
 // Routes
 app.use("/api/forms", formRoutes);
 app.use("/api/responses", submissionRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+
 
 // Start server
 app.listen(PORT, () => {

@@ -15,7 +15,7 @@ export const createForm = async (req, res) => {
 // Get all forms
 export const getForms = async (req, res) => {
   try {
-    const forms = await Form.find();
+    const forms = await Form.find()
     res.json(forms);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -69,3 +69,5 @@ export const deleteForm = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+

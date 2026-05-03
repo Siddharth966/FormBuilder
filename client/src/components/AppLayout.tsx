@@ -7,7 +7,6 @@ import {
     UnorderedListOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { MessageProvider } from '../services/MessageProvider';
 
 const { Sider, Content } = Layout;
 
@@ -47,6 +46,11 @@ const AppLayout = () => {
                                 key: '/forms',
                                 icon: <UnorderedListOutlined />,
                                 label: 'All Forms',
+                            },
+                            {
+                                key: '/responses',
+                                icon: <UnorderedListOutlined />,
+                                label: 'Responses',
                             },
                         ]}
                     />

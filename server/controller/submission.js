@@ -41,3 +41,11 @@ export const deleteResponse = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getResponse = async (req, res) => {
+  try {
+    const { formId } = req.query;
+    const response = await Response.find({ formId });
+    res.status(200).json(response);
+  } catch {}
+};
