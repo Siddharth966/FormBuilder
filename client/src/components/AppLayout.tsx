@@ -16,9 +16,6 @@ const AppLayout = () => {
 
     return (
         <>
-
-
-
             <Layout style={{ minHeight: '100vh' }}>
                 {/* Sidebar */}
                 <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
@@ -56,7 +53,6 @@ const AppLayout = () => {
                     />
                 </Sider>
 
-                {/* Main Layout */}
                 <Layout>
                     <Content style={{ margin: '16px' }}>
                         <div style={{ padding: 20, background: '#fff', minHeight: 360 }}>

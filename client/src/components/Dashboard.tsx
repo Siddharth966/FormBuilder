@@ -74,12 +74,11 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      {/* HEADER */}
+    
       <h1 className="text-2xl font-bold mb-6 text-gray-800">
-        📊 Analytics Dashboard
+        Analytics Dashboard
       </h1>
 
-      {/* KPI CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <Card title="Total Forms" value={stats.totalForms} />
         <Card title="Total Responses" value={stats.totalResponses} />
@@ -87,7 +86,6 @@ const Dashboard = () => {
         <Card title="Avg Responses" value={stats.avgResponses} />
       </div>
 
-      {/* CHART SECTION */}
       <div className="bg-white p-6 rounded-xl shadow-md">
         <div className="flex justify-between mb-4">
           <h2 className="text-lg font-semibold">Form Analytics</h2>
@@ -117,7 +115,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* ✅ BIG CHART FIX */}
         <div className="flex justify-center items-center h-[400px] md:h-[500px]">
           <div className="w-[90%] md:w-[60%] h-full">
             {chartData ? (
@@ -156,7 +153,6 @@ const Dashboard = () => {
   );
 };
 
-/* ✅ CARD COMPONENT */
 const Card = ({ title, value }) => (
   <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition duration-300">
     <h3 className="text-gray-500 text-sm">{title}</h3>

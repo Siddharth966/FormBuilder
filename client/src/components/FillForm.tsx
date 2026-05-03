@@ -98,14 +98,11 @@ const FillForm = () => {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
             <div className="w-full max-w-lg bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
 
-                {/* Header */}
-
                 <h1 className="text-2xl font-semibold text-gray-900 mb-1">{formTitle}</h1>
                 <p className="text-sm text-gray-400 mb-6">
                 </p>
                 <hr className="border-gray-100 mb-6" />
 
-                {/* Form */}
                 <AntForm form={form} layout="vertical" onFinish={handleSubmit} className="space-y-5">
                     {fields.map((field) => (
                         <AntForm.Item

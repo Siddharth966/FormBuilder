@@ -40,9 +40,9 @@ export const getFormById = async (req, res) => {
 export const updateFormById = async (req, res) => {
   try {
     const updatedForm = await Form.findByIdAndUpdate(
-      req.params.id, // ID from URL
-      req.body, // data to update
-      { new: true, runValidators: true }, // return updated doc
+      req.params.id, // ID from URL hai
+      req.body, // data to update krna hai
+      { new: true, runValidators: true }, // return updated doc hai
     );
 
     if (!updatedForm) {
@@ -55,7 +55,7 @@ export const updateFormById = async (req, res) => {
   }
 };
 
-// Delete form
+// Delete form karne ke liye
 export const deleteForm = async (req, res) => {
   try {
     const form = await Form.findByIdAndDelete(req.params.id);

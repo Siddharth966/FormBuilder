@@ -9,7 +9,6 @@ const Responses = () => {
   const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // 🔹 Fetch Forms
   const fetchForms = async () => {
     try {
       const res = await axios.get("http://localhost:3000/api/forms");
@@ -19,7 +18,7 @@ const Responses = () => {
     }
   };
 
-  // 🔹 Fetch Responses by formId
+
   const fetchResponses = async (formId) => {
     try {
       setLoading(true);
@@ -38,7 +37,6 @@ const Responses = () => {
     fetchForms();
   }, []);
 
-  // 🔥 Dynamic Columns from `data`
   const columns =
     responses.length > 0
       ? [
@@ -60,7 +58,7 @@ const Responses = () => {
     <div style={{ padding: "20px" }}>
       <h2>Select Form Responses</h2>
 
-      {/* 🔽 Form Dropdown */}
+
       <Select
         placeholder="Select Form"
         style={{ width: 300, marginBottom: 20 }}
@@ -73,7 +71,6 @@ const Responses = () => {
         ))}
       </Select>
 
-      {/* ⏳ Loader */}
       {loading ? (
         <Spin />
       ) : (

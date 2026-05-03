@@ -61,7 +61,7 @@ const FormPreviewModal: React.FC<Props> = ({
                     {formData.fields.map((field) => (
                         <AntForm.Item
                             key={field._id}
-                            name={field.label} // 👈 important for form values
+                            name={field.label} 
                             label={field.label}
                             rules={[
                                 {

@@ -34,7 +34,6 @@ const AllForm: React.FC = () => {
         fetchDetails();
     }, []);
 
-    // 👁 handle view
     const handleView = (record: Form) => {
         setSelectedForm(record);
         setOpen(true);
@@ -118,7 +117,6 @@ const AllForm: React.FC = () => {
                 loading={loading}
             />
 
-            {/* ✅ Modal */}
             <FormPreviewModal
                 open={open}
                 formData={selectedForm}
